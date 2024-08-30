@@ -1,0 +1,81 @@
+[gd_scene load_steps=11 format=3 uid="uid://cepcdpmu8fwui"]
+
+[ext_resource type="Script" path="res://scripts/Basket.gd" id="1_e6qv8"]
+[ext_resource type="PackedScene" uid="uid://cwkqhkalvxrvl" path="res://assets/models/basket.glb" id="1_kv8t6"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xv1ow"]
+height = 0.797902
+radius = 1.49876
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2posl"]
+height = 0.3696
+radius = 1.28075
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wbs2j"]
+height = 0.029478
+radius = 1.23144
+
+[sub_resource type="Curve" id="Curve_pde0w"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.411364, 0.684211), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_wr6ki"]
+curve = SubResource("Curve_pde0w")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lbb2n"]
+spread = 180.0
+flatness = 0.47
+initial_velocity_min = 3.0
+initial_velocity_max = 4.0
+scale_max = 1.2
+scale_curve = SubResource("CurveTexture_wr6ki")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hfcqp"]
+shading_mode = 0
+albedo_color = Color(0.909804, 0.933333, 0.956863, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_3t5rk"]
+material = SubResource("StandardMaterial3D_hfcqp")
+radius = 0.7
+height = 0.8
+radial_segments = 9
+rings = 8
+
+[node name="basket" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+script = ExtResource("1_e6qv8")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(0.975, 0, 0, 0, 0.975, 0, 0, 0, 0.975, -0.0138283, 0.622001, 0.00361443)
+shape = SubResource("CylinderShape3D_xv1ow")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0159399, 0)
+shape = SubResource("CylinderShape3D_2posl")
+
+[node name="Area3D" type="Area3D" parent="StaticBody3D"]
+
+[node name="ItemCollision" type="CollisionShape3D" parent="StaticBody3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00678656, 1.03682, 0.0310107)
+shape = SubResource("CylinderShape3D_wbs2j")
+
+[node name="basket" parent="StaticBody3D" instance=ExtResource("1_kv8t6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.91389, 1.43051e-06, 0.0258861)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.148384, 1.36602, 0)
+transparency = 0.6
+emitting = false
+amount = 40
+lifetime = 0.4
+one_shot = true
+explosiveness = 0.77
+fixed_fps = 60
+visibility_aabb = AABB(-1.05158, -0.400346, -1.41978, 2.47524, 1.20499, 2.83957)
+draw_order = 1
+trail_lifetime = 2.15
+process_material = SubResource("ParticleProcessMaterial_lbb2n")
+draw_pass_1 = SubResource("SphereMesh_3t5rk")
+
+[connection signal="body_entered" from="StaticBody3D/Area3D" to="StaticBody3D" method="_on_area_3d_body_entered"]

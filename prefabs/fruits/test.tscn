@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://re1ll3vblc4w"]
+
+[ext_resource type="Script" path="res://scripts/Fruit.gd" id="1_at3uk"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4fjev"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_f3yjk"]
+height = 2.229
+
+[node name="test" type="StaticBody3D"]
+script = ExtResource("1_at3uk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_4fjev")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_f3yjk")

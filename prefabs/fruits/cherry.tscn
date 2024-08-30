@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8hy5115ue77c"]
+
+[ext_resource type="Script" path="res://scripts/Fruit.gd" id="1_2ixkd"]
+[ext_resource type="PackedScene" uid="uid://dqprqcu3hqcmy" path="res://assets/models/cherry.glb" id="2_q0duf"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gl3na"]
+radius = 0.688237
+
+[node name="cherry" type="StaticBody3D"]
+script = ExtResource("1_2ixkd")
+
+[node name="cherry" parent="." instance=ExtResource("2_q0duf")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.00767696, 0, -0.0761161)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.313272, -0.0192234, -0.284433)
+shape = SubResource("SphereShape3D_gl3na")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.204139, -0.178745, 0.074929)
+shape = SubResource("SphereShape3D_gl3na")

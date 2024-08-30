@@ -1,0 +1,242 @@
+[gd_scene load_steps=28 format=3 uid="uid://byy2smcg2ee7h"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_0lwi1"]
+[ext_resource type="Script" path="res://scripts/ItemHandler.gd" id="2_6vsm8"]
+[ext_resource type="PackedScene" uid="uid://cepcdpmu8fwui" path="res://prefabs/basket.tscn" id="2_7ljd8"]
+[ext_resource type="Script" path="res://scripts/UI.gd" id="4_18a3g"]
+[ext_resource type="PackedScene" uid="uid://b8hy5115ue77c" path="res://prefabs/fruits/cherry.tscn" id="4_oknau"]
+[ext_resource type="PackedScene" uid="uid://bfqx4qpr4vbeq" path="res://prefabs/fruits/watermelon.tscn" id="5_61lj4"]
+[ext_resource type="PackedScene" uid="uid://djdeegj8vmah7" path="res://prefabs/fruits/apple.tscn" id="5_fek7i"]
+[ext_resource type="LabelSettings" uid="uid://crxtv3l6ns4w6" path="res://assets/other/main_font.tres" id="5_pn5y6"]
+[ext_resource type="Script" path="res://scripts/Menu.gd" id="5_pwjy5"]
+[ext_resource type="Shader" path="res://assets/other/menu_blur.gdshader" id="7_0hh7v"]
+[ext_resource type="StyleBox" uid="uid://xytbsvsp4nwn" path="res://assets/other/button_normal.tres" id="7_35whi"]
+[ext_resource type="StyleBox" uid="uid://clwdx245n42gk" path="res://assets/other/toggle_normal.tres" id="7_xjgga"]
+[ext_resource type="PackedScene" uid="uid://bc3vipxxvabje" path="res://assets/models/background_mountains.glb" id="8_0ry1h"]
+[ext_resource type="StyleBox" uid="uid://bofhjb1kyjphu" path="res://assets/other/button_pressed.tres" id="8_ijsux"]
+[ext_resource type="PackedScene" uid="uid://kypduw1io2k1" path="res://assets/models/skybox.glb" id="9_lrdf4"]
+[ext_resource type="PackedScene" uid="uid://dwdci1sd8hu67" path="res://prefabs/fruits/banana.tscn" id="11_ax4kc"]
+[ext_resource type="Script" path="res://scripts/skybox_rotate.gd" id="16_ickb3"]
+[ext_resource type="PackedScene" uid="uid://q2hq2fe3tp6d" path="res://assets/models/tree.glb" id="18_x7djw"]
+[ext_resource type="PackedScene" uid="uid://d24ay4gcc8ndq" path="res://assets/models/house.glb" id="19_vw82k"]
+[ext_resource type="PackedScene" uid="uid://vp0icb0cteup" path="res://assets/models/well.glb" id="20_yvcgu"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0hcuw"]
+
+[sub_resource type="Sky" id="Sky_51yvn"]
+sky_material = SubResource("ProceduralSkyMaterial_0hcuw")
+
+[sub_resource type="Environment" id="Environment_y8ufx"]
+background_mode = 2
+sky = SubResource("Sky_51yvn")
+fog_enabled = true
+fog_light_color = Color(0.478431, 0.513726, 0.568627, 1)
+fog_light_energy = 2.11
+fog_density = 0.0009
+fog_sky_affect = 0.745
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_he3qw"]
+shader = ExtResource("7_0hh7v")
+shader_parameter/lod = 1.965
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mojlp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kp3ve"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ghmrq"]
+
+[node name="fruit_blitz" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0183382, 5.66066, 14.5074)
+current = true
+fov = 46.5
+near = 0.226
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_y8ufx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.930629, 0.251821, -0.26555, 0, 0.725615, 0.688101, 0.365965, -0.640367, 0.675278, -13.1148, 0, 0)
+light_color = Color(1, 1, 0.839216, 1)
+light_energy = 1.258
+shadow_enabled = true
+
+[node name="game" type="Node3D" parent="."]
+script = ExtResource("1_0lwi1")
+
+[node name="UI" type="Node2D" parent="game"]
+script = ExtResource("4_18a3g")
+
+[node name="Score" type="Label" parent="game/UI"]
+offset_left = 448.0
+offset_top = 40.0
+offset_right = 632.0
+offset_bottom = 142.0
+text = "0"
+label_settings = ExtResource("5_pn5y6")
+horizontal_alignment = 1
+
+[node name="basket" parent="game" instance=ExtResource("2_7ljd8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0748067, 0, -1.00415)
+
+[node name="ItemHandler" type="Node3D" parent="game" node_paths=PackedStringArray("fruits")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.49434, -0.991736)
+script = ExtResource("2_6vsm8")
+fruits = NodePath("../../Fruits")
+
+[node name="FruitSpawnTimer" type="Timer" parent="game"]
+wait_time = 0.96
+autostart = true
+
+[node name="DifficultyTimer" type="Timer" parent="game"]
+wait_time = 15.0
+autostart = true
+
+[node name="Menu" type="Node2D" parent="."]
+visible = false
+position = Vector2(528, 408)
+script = ExtResource("5_pwjy5")
+
+[node name="blur" type="ColorRect" parent="Menu"]
+material = SubResource("ShaderMaterial_he3qw")
+offset_left = -976.0
+offset_top = -600.0
+offset_right = 1024.0
+offset_bottom = 900.0
+
+[node name="Game Over" type="Label" parent="Menu"]
+visible = false
+offset_left = -176.0
+offset_top = -96.0
+offset_right = 203.0
+offset_bottom = 3.0
+text = "Game Over"
+label_settings = ExtResource("5_pn5y6")
+
+[node name="Music" type="CheckButton" parent="Menu"]
+offset_left = -64.0
+offset_top = 88.0
+offset_right = 72.0
+offset_bottom = 136.0
+mouse_default_cursor_shape = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/check_v_offset = 0
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = ExtResource("7_xjgga")
+theme_override_styles/pressed = ExtResource("7_xjgga")
+theme_override_styles/hover = ExtResource("7_xjgga")
+theme_override_styles/hover_pressed = ExtResource("7_xjgga")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mojlp")
+button_pressed = true
+text = " Music"
+
+[node name="Restart" type="Button" parent="Menu"]
+offset_left = -64.0
+offset_top = 8.0
+offset_right = 72.0
+offset_bottom = 56.0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = ExtResource("7_35whi")
+theme_override_styles/hover = ExtResource("7_35whi")
+theme_override_styles/pressed = ExtResource("8_ijsux")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kp3ve")
+action_mode = 0
+text = "Restart"
+
+[node name="Quit" type="Button" parent="Menu"]
+offset_left = -64.0
+offset_top = 168.0
+offset_right = 72.0
+offset_bottom = 216.0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = ExtResource("7_35whi")
+theme_override_styles/hover = ExtResource("7_35whi")
+theme_override_styles/pressed = ExtResource("8_ijsux")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ghmrq")
+text = "Quit"
+
+[node name="Fruits" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 17)
+
+[node name="banana" parent="Fruits" instance=ExtResource("11_ax4kc")]
+transform = Transform3D(-0.404806, 0, 0.914402, 0, 1, 0, -0.914402, 0, -0.404806, 5.63727, 0.0329037, -0.320251)
+
+[node name="apple" parent="Fruits" instance=ExtResource("5_fek7i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="watermelon" parent="Fruits" instance=ExtResource("5_61lj4")]
+transform = Transform3D(0.0246764, 0, -0.999695, 0, 1, 0, 0.999695, 0, 0.0246764, 0, 0, 0)
+
+[node name="StaticBody3D" parent="Fruits" instance=ExtResource("4_oknau")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+volume_db = -13.512
+
+[node name="background" type="Node3D" parent="."]
+
+[node name="background_mountains" parent="background" instance=ExtResource("8_0ry1h")]
+transform = Transform3D(8.63484, 0, 5.04377, 0, 10, 0, -5.04377, 0, 8.63484, -76.6813, -61.4638, -176.232)
+
+[node name="background_mountains2" parent="background" instance=ExtResource("8_0ry1h")]
+transform = Transform3D(2.9404, 0, -9.55793, 0, 10, 0, 9.55793, 0, 2.9404, 114.907, -61.4638, -230.115)
+
+[node name="skybox" parent="background" instance=ExtResource("9_lrdf4")]
+transform = Transform3D(999.927, 0.95498, 12.0581, -0.955437, 1000, 0.0321488, -12.058, -0.0436672, 999.927, -7.43399, 63.9793, -598.469)
+script = ExtResource("16_ickb3")
+
+[node name="tree" parent="background" instance=ExtResource("18_x7djw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.4326, -49.9506, -134.083)
+
+[node name="tree2" parent="background" instance=ExtResource("18_x7djw")]
+transform = Transform3D(0.532625, 0, -0.846351, 0, 1, 0, 0.846351, 0, 0.532625, -42.4179, -49.7015, -194.809)
+
+[node name="tree3" parent="background" instance=ExtResource("18_x7djw")]
+transform = Transform3D(0.802568, 0, 0.596561, 0, 1, 0, -0.596561, 0, 0.802568, -79.4184, -49.8789, -211.116)
+
+[node name="tree5" parent="background" instance=ExtResource("18_x7djw")]
+transform = Transform3D(0.981687, 0, -0.190501, 0, 1, 0, 0.190501, 0, 0.981687, -79.4184, -48.0271, -127.943)
+
+[node name="tree10" parent="background" instance=ExtResource("18_x7djw")]
+transform = Transform3D(0.853743, 0.00110118, 0.520693, -0.00106599, 0.999999, -0.000367008, -0.520693, -0.00024172, 0.853744, -48.8055, -45.3221, -143.999)
+
+[node name="tree6" parent="background" instance=ExtResource("18_x7djw")]
+transform = Transform3D(0.532625, 0, -0.846351, 0, 1, 0, 0.846351, 0, 0.532625, 85.8181, -43.1253, -170.785)
+
+[node name="tree9" parent="background" instance=ExtResource("18_x7djw")]
+transform = Transform3D(0.532625, 0, -0.846351, 0, 1, 0, 0.846351, 0, 0.532625, 119.47, -49.1601, -194.774)
+
+[node name="tree7" parent="background" instance=ExtResource("18_x7djw")]
+transform = Transform3D(-0.173064, 0, 0.984911, 0, 1, 0, -0.984911, 0, -0.173064, 2.57983, -44.1388, -166.435)
+
+[node name="tree8" parent="background" instance=ExtResource("18_x7djw")]
+transform = Transform3D(0.877297, 0, -0.479948, 0, 1, 0, 0.479948, 0, 0.877297, 61.7409, -46.0135, -233.148)
+
+[node name="tree4" parent="background" instance=ExtResource("18_x7djw")]
+transform = Transform3D(-0.0709926, 0, -0.997477, 0, 1, 0, 0.997477, 0, -0.0709926, 53.9832, -49.8789, -166.659)
+
+[node name="house2" parent="background" instance=ExtResource("19_vw82k")]
+transform = Transform3D(-1.88161, 0.0283197, 0.677296, -0.0138133, 1.99624, -0.121843, -0.677747, -0.119309, -1.87788, -26.039, -48.7327, -220.291)
+
+[node name="well2" parent="background" instance=ExtResource("20_yvcgu")]
+transform = Transform3D(0.00904894, 0, 3.59999, 0, 3.6, 0, -3.59999, 0, 0.00904894, -82.3162, -52.0211, -185.506)
+
+[node name="house" parent="background" instance=ExtResource("19_vw82k")]
+transform = Transform3D(1.85289, 0, 0.752869, 0, 2, 0, -0.752869, 0, 1.85289, 71.2177, -46.5725, -213.353)
+
+[node name="well" parent="background" instance=ExtResource("20_yvcgu")]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 48.6458, -45.5304, -222.93)
+
+[connection signal="timeout" from="game/FruitSpawnTimer" to="game/ItemHandler" method="_on_fruit_spawn_timer_timeout"]
+[connection signal="timeout" from="game/DifficultyTimer" to="game/ItemHandler" method="_on_difficulty_timer_timeout"]
+[connection signal="toggled" from="Menu/Music" to="Menu" method="_on_check_button_toggled"]
+[connection signal="pressed" from="Menu/Restart" to="game" method="_on_restart_pressed"]
+[connection signal="pressed" from="Menu/Restart" to="Menu" method="_on_restart_pressed"]
+[connection signal="pressed" from="Menu/Quit" to="game" method="_on_quit_pressed"]

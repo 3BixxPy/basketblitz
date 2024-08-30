@@ -1,0 +1,106 @@
+[gd_scene load_steps=14 format=3 uid="uid://bs7q133cfabfr"]
+
+[ext_resource type="PackedScene" uid="uid://cwkqhkalvxrvl" path="res://assets/models/basket.glb" id="1_7knf6"]
+[ext_resource type="Script" path="res://scripts/MenuBasket.gd" id="1_t13y5"]
+[ext_resource type="PackedScene" uid="uid://ew2r6mwgadbw" path="res://assets/models/watermelon.glb" id="2_rdt02"]
+[ext_resource type="PackedScene" uid="uid://dqprqcu3hqcmy" path="res://assets/models/cherry.glb" id="3_bydqa"]
+[ext_resource type="PackedScene" uid="uid://ugb6mjux1x4y" path="res://assets/models/apple.glb" id="4_cd0u0"]
+[ext_resource type="LabelSettings" uid="uid://crxtv3l6ns4w6" path="res://assets/other/main_font.tres" id="5_83nj1"]
+[ext_resource type="Script" path="res://scripts/StartMenu.gd" id="5_kojo1"]
+[ext_resource type="PackedScene" uid="uid://c1d6bp4l20tna" path="res://assets/models/banana.glb" id="6_r5tnt"]
+[ext_resource type="StyleBox" uid="uid://xytbsvsp4nwn" path="res://assets/other/button_normal.tres" id="7_ma22o"]
+[ext_resource type="StyleBox" uid="uid://bofhjb1kyjphu" path="res://assets/other/button_pressed.tres" id="9_tmc2p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e2hao"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i3fca"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.784314, 0.682353, 0.494118, 0.968627)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lvgvl"]
+material = SubResource("StandardMaterial3D_i3fca")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="BasketNode" type="Node3D" parent="."]
+transform = Transform3D(-0.426553, 0, -0.904463, 0, 1, 0, 0.904463, 0, -0.426553, -5.12721, 0.432735, 0.655055)
+script = ExtResource("1_t13y5")
+
+[node name="basket" parent="BasketNode" instance=ExtResource("1_7knf6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.88834, 0, 0)
+
+[node name="watermelon2" parent="BasketNode/basket" instance=ExtResource("2_rdt02")]
+transform = Transform3D(0.204208, 0.235825, -0.736672, 0, 0.761912, 0.243905, 0.773498, -0.0622591, 0.194486, -4.69276, 0.0782154, -7.43521)
+
+[node name="cherry" parent="BasketNode/basket" instance=ExtResource("3_bydqa")]
+transform = Transform3D(0.321696, 0, 0.237721, 0, 0.4, 0, -0.237721, 0, 0.321696, -5.38422, 1.00229, 0.736506)
+
+[node name="cherry2" parent="BasketNode/basket" instance=ExtResource("3_bydqa")]
+transform = Transform3D(-0.221828, -0.281294, 0.17795, 0.324751, -0.229801, 0.0415692, 0.0730002, 0.167527, 0.355817, -4.09139, 0.320653, 0.131884)
+
+[node name="watermelon" parent="BasketNode/basket" instance=ExtResource("2_rdt02")]
+transform = Transform3D(0.293031, 0.123517, -0.385845, 8.88179e-16, 0.476195, 0.15244, 0.405133, -0.0893394, 0.27908, -6.84246, -0.294015, -3.58432)
+
+[node name="apple2" parent="BasketNode/basket" instance=ExtResource("4_cd0u0")]
+transform = Transform3D(1.2, -1.49012e-08, 0, 0, 1.07069, 0.541875, -2.98023e-08, -0.541875, 1.07069, -4.57267, 0.256903, 0.886755)
+
+[node name="apple" parent="BasketNode/basket" instance=ExtResource("4_cd0u0")]
+transform = Transform3D(1.2, -1.49012e-08, 0, 0, 1.07069, 0.541875, -2.98023e-08, -0.541875, 1.07069, -5.76567, 0.646954, -0.278254)
+
+[node name="banana" parent="BasketNode/basket" instance=ExtResource("6_r5tnt")]
+transform = Transform3D(-0.00263509, -0.266485, 0.754307, -0.794116, -0.0904155, -0.0347166, 0.0968156, -0.748873, -0.264228, -4.4359, 0.876125, 1.07267)
+
+[node name="Menu" type="Node2D" parent="."]
+script = ExtResource("5_kojo1")
+
+[node name="Title" type="Label" parent="Menu"]
+offset_left = -224.0
+offset_top = 264.0
+offset_right = 189.0
+offset_bottom = 363.0
+scale = Vector2(1.44, 1.44)
+text = "Fruit Blitz!"
+label_settings = ExtResource("5_83nj1")
+
+[node name="Play" type="Button" parent="Menu"]
+offset_left = -120.0
+offset_top = 504.0
+offset_right = 130.0
+offset_bottom = 577.0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("7_ma22o")
+theme_override_styles/hover = ExtResource("7_ma22o")
+theme_override_styles/pressed = ExtResource("9_tmc2p")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e2hao")
+text = "PLAY"
+
+[node name="Quit" type="Button" parent="Menu"]
+offset_left = -120.0
+offset_top = 616.0
+offset_right = 130.0
+offset_bottom = 689.0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("7_ma22o")
+theme_override_styles/hover = ExtResource("7_ma22o")
+theme_override_styles/pressed = ExtResource("9_tmc2p")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e2hao")
+text = "QUIT
+"
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.693829, 0, -0.72014, 0, 1, 0, 0.72014, 0, 0.693829, -10.1431, 2.50396, 8.6784)
+fov = 28.7
+
+[node name="Background" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.240299, -8.15895, 5.77701, 9.99567, -0.294394, -1.64761e-08, 0.170072, 5.7745, 8.16249, 2.07209, 0, -4.14718)
+mesh = SubResource("PlaneMesh_lvgvl")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.842236, -0.476208, 0.252714, 0, 0.468763, 0.883324, -0.539109, -0.743968, 0.394809, -15.0212, 0, 0)
+shadow_enabled = true
+
+[connection signal="pressed" from="Menu/Play" to="Menu" method="_on_play_pressed"]
+[connection signal="pressed" from="Menu/Quit" to="Menu" method="_on_quit_pressed"]
